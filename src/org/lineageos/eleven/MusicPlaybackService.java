@@ -18,6 +18,7 @@
 package org.lineageos.eleven;
 
 import android.Manifest.permission;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -1650,7 +1651,6 @@ public class MusicPlaybackService extends Service
                 .setContentText(text)
                 .setColor(artwork.getVibrantColor())
                 .setWhen(mNotificationPostTime)
-                .setShowWhen(false)
                 .setStyle(style)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .addAction(prevAction)
@@ -2834,9 +2834,8 @@ public class MusicPlaybackService extends Service
             return mCachedBitmapWithColors[targetIndex];
         }
 
-        // otherwise get the artwork (or defaultartwork if none found)
-        final BitmapWithColors bitmap = mImageFetcher.getArtwork(albumName,
-                albumId, artistName, smallBitmap);
+        // otherwise get the artwork (or default artwork if none found)
+        final BitmapWithColors bitmap = mImageFetcher.getArtwork(albumName, albumId, smallBitmap);
 
         // if the key is different, clear the bitmaps first
         if (!key.equals(mCachedKey)) {
@@ -3415,6 +3414,7 @@ public class MusicPlaybackService extends Service
         }
     }
 
+    @SuppressWarnings("unused")
     private static final class ServiceStub extends IElevenService.Stub {
 
         private final WeakReference<MusicPlaybackService> mService;
@@ -3649,6 +3649,7 @@ public class MusicPlaybackService extends Service
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class QueueUpdateTask extends AsyncTask<Void, Void, List<MediaSession.QueueItem>> {
         private final long[] mQueue;
 
